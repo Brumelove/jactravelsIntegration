@@ -1,0 +1,36 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /search-api
+
+logging:
+  level:
+    org:
+      springframework:
+        web : INFO
+      hibernate: INFO
+
+spring:
+  application:
+    name: search-api
+  datasource:
+    url: jdbc:postgresql://localhost:5432/travelbetahotel?useUnicode=true&characterEncoding=UTF8&useSSL=false
+    username: travelbetahotel
+    password: travelbetahotel
+    #driverClassName: org.
+
+  jpa:
+    hibernate.ddl-auto: update
+    properties:
+      hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
+      hibernate.format_sql: false
+      hibernate.jdbc.lob.non_contextual_creation: true
+    hibernate.naming:
+      implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+      physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+
+  cache:
+    type: redis
+  redis:
+    host: localhost
+    port: 6379

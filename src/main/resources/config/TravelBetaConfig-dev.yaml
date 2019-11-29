@@ -1,0 +1,14 @@
+#httpheader host url
+hostUrl : xmlintegrations.jactravel.com
+
+#Login username
+username : Travelbeta
+
+#Login Password
+password : xmltest
+
+#time before redis cache expires
+cacheExpiryHours : 10
+
+#Rest Endpoint
+baseUrl : http://xmlintegrations.jactravel.com/xml/book.aspx

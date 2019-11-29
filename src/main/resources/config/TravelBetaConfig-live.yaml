@@ -1,0 +1,14 @@
+#httpheader host url
+hostUrl : http://totalstayxml.ivector.co.uk/xml/book.aspx
+
+#Login username
+username : TravelbetaXML
+
+#Login Password
+password : CwUYQemQrH73
+
+#time before redis cache expires
+cacheExpiryHours : 10
+
+#Rest Endpoint
+baseUrl : http://totalstayxml.ivector.co.uk/xml/book.aspx
