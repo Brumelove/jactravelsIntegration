@@ -24,7 +24,7 @@ public class PreBookResponse implements Serializable {
 
     private Integer totalCommission;
 
-    private Integer VATOnCommission;
+    private String VATOnCommission;
 
     private List<Cancellation> cancellations;
 }

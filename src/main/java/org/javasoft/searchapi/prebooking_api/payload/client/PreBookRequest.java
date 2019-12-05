@@ -13,7 +13,6 @@ import java.util.List;
 @Data
 public class PreBookRequest {
     private Integer propertyID;
-
     private String arrivalDate;
     private Integer duration;
     private List<RoomBooking> roomBookings;

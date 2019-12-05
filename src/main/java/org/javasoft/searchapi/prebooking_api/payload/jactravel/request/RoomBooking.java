@@ -36,7 +36,7 @@ public class RoomBooking {
     @XmlElement(name = "Infants")
     private Integer infants;
 
-    @XmlElement(name = "ChildAge")
-    @XmlElementWrapper(name = "ChildAges")
-    private List<ChildAgeInfo> childAge;
+//    @XmlElement(name = "ChildAge")
+//    @XmlElementWrapper(name = "ChildAges")
+//    private List<ChildAgeInfo> childAge;
 }

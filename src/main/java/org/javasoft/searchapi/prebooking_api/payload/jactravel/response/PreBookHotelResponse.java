@@ -33,7 +33,7 @@ public class PreBookHotelResponse implements Serializable {
     private Integer totalCommission;
 
     @XmlElement(name = "VATOnCommission")
-    private Integer VATOnCommission;
+    private String VATOnCommission;
 
     @XmlElement(name = "Cancellation")
     @XmlElementWrapper(name = "Cancellations")

@@ -20,7 +20,7 @@ public class RoomInfo {
     @XmlElement(name = "Infants")
     private Integer infants;
 
-    @XmlElement(name = "ChildAge")
-    @XmlElementWrapper(name = "ChildAges")
-    private List<ChildAgeInfo> childAges;
+//    @XmlElement(name = "ChildAge")
+//    @XmlElementWrapper(name = "ChildAges")
+//    private List<ChildAgeInfo> childAges;
 }
