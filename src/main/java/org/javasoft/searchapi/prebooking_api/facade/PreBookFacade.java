@@ -29,7 +29,7 @@ public class PreBookFacade {
     private final PreBookingRestService preBookingRestService;
 
     private final PreBookMapperUtil preBookMapperUtl;
-    @Autowired
+
     private final RedisTemplate<String, PreBookResponse> redisTemplate;
 
     @Autowired
@@ -43,7 +43,7 @@ public class PreBookFacade {
 
 
 
-    private PreBookResponse prebookJacTravels(PreBookRequest preBookRequest) {
+    private PreBookResponse preBookJacTravels(PreBookRequest preBookRequest) {
 
         val preBookHotelRequest = preBookMapperUtl.mapPreBookHotelRequest.apply(preBookRequest);
 
@@ -69,7 +69,7 @@ public class PreBookFacade {
             return checkRedisCache(redisKey);
         } else {
             log.info("============= Key Not Found Checking API =========");
-            preBookResponse = prebookJacTravels(preBookRequest);
+            preBookResponse = preBookJacTravels(preBookRequest);
 
             if (preBookResponse != null) {
                 log.info("============= Updating Redis Cache with Key =========");
@@ -94,7 +94,7 @@ public class PreBookFacade {
                 preBookRequest.getArrivalDate())
                 .append(preBookRequest.getDuration())
                 .append(preBookRequest.getPropertyID())
-                .append(preBookRequest.getRoomBookings())
+                .append(preBookRequest.getPreRoomBookings())
                 .toString();
     }
 }

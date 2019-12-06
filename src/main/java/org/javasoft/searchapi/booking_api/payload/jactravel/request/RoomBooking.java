@@ -1,8 +1,7 @@
-package org.javasoft.searchapi.prebooking_api.payload.jactravel.request;
+package org.javasoft.searchapi.booking_api.payload.jactravel.request;
 
 
 import lombok.Data;
-import org.javasoft.searchapi.payload.travelbeta.request.ChildAgeInfo;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
@@ -35,6 +34,11 @@ public class RoomBooking {
 
     @XmlElement(name = "Infants")
     private Integer infants;
+
+    @XmlElement(name = "Guest")
+    @XmlElementWrapper(name = "Guests")
+    private List<Guest> guests;
+
 
 //    @XmlElement(name = "ChildAge")
 //    @XmlElementWrapper(name = "ChildAges")

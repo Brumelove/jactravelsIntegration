@@ -2,7 +2,7 @@ package org.javasoft.searchapi.prebooking_api.payload.client;
 
 
 import lombok.Data;
-import org.javasoft.searchapi.prebooking_api.payload.jactravel.request.RoomBooking;
+import org.javasoft.searchapi.prebooking_api.payload.jactravel.request.PreRoomBooking;
 
 import java.util.List;
 
@@ -15,6 +15,6 @@ public class PreBookRequest {
     private Integer propertyID;
     private String arrivalDate;
     private Integer duration;
-    private List<RoomBooking> roomBookings;
+    private List<PreRoomBooking> preRoomBookings;
 }
 

@@ -14,7 +14,7 @@ import java.util.List;
 @Data
 
 @XmlRootElement(name = "BookingDetails")
-public class BookingDetails {
+public class PreBookingDetails {
 
     @XmlElement(name = "PropertyID")
     private Integer propertyID;
@@ -27,6 +27,6 @@ public class BookingDetails {
 
     @XmlElement(name = "RoomBooking")
     @XmlElementWrapper(name = "RoomBookings")
-    private List<RoomBooking> roomBookings;
+    private List<PreRoomBooking> preRoomBookings;
 
 }

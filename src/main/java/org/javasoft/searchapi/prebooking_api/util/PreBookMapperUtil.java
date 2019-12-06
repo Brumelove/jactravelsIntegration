@@ -6,7 +6,7 @@ import org.javasoft.searchapi.config.TravelBetaConfig;
 import org.javasoft.searchapi.payload.travelbeta.request.LoginDetails;
 import org.javasoft.searchapi.prebooking_api.payload.client.PreBookRequest;
 import org.javasoft.searchapi.prebooking_api.payload.client.PreBookResponse;
-import org.javasoft.searchapi.prebooking_api.payload.jactravel.request.BookingDetails;
+import org.javasoft.searchapi.prebooking_api.payload.jactravel.request.PreBookingDetails;
 import org.javasoft.searchapi.prebooking_api.payload.jactravel.request.PreBookHotelRequest;
 import org.javasoft.searchapi.prebooking_api.payload.jactravel.response.PreBookHotelResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,14 +45,14 @@ public class PreBookMapperUtil {
 
         val loginDetails = getLoginDetails();
 
-        val bookingDetails = new BookingDetails();
+        val bookingDetails = new PreBookingDetails();
         bookingDetails.setArrivalDate(preBookRequest.getArrivalDate());
         bookingDetails.setDuration(preBookRequest.getDuration());
         bookingDetails.setPropertyID(preBookRequest.getPropertyID());
-        bookingDetails.setRoomBookings(preBookRequest.getRoomBookings());
+        bookingDetails.setPreRoomBookings(preBookRequest.getPreRoomBookings());
 
         preBoookHotelRequest.setLoginDetails(loginDetails);
-        preBoookHotelRequest.setBookingDetails(bookingDetails);
+        preBoookHotelRequest.setPreBookingDetails(bookingDetails);
 
         return preBoookHotelRequest;
     };
