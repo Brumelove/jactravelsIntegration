@@ -1,13 +1,13 @@
-package org.javasoft.searchapi.multi_book_search_api.controller;
+package org.javasoft.searchapi.property_details_api.controller;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
 import org.javasoft.searchapi.exception.ErrorDTO;
-import org.javasoft.searchapi.multi_book_search_api.facade.PreCancelFacade;
-import org.javasoft.searchapi.multi_book_search_api.payload.client.PreCancelRequest;
-import org.javasoft.searchapi.multi_book_search_api.payload.client.PreCancelResponse;
+import org.javasoft.searchapi.property_details_api.facade.PropertyDetailsFacade;
+import org.javasoft.searchapi.property_details_api.payload.client.PropertyDetailsRequest;
+import org.javasoft.searchapi.property_details_api.payload.client.PropertyDetailsResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,16 +23,16 @@ import javax.validation.Valid;
 
 @Slf4j
 @RestController
-public class PreCancelController {
+public class PropertyDetailsController {
 
-    private final PreCancelFacade preCancelFacade;
+    private final PropertyDetailsFacade propertyDetailsFacade;
 
     @Autowired
-    public PreCancelController(PreCancelFacade preCancelFacade) {
-        this.preCancelFacade = preCancelFacade;
+    public PropertyDetailsController(PropertyDetailsFacade propertyDetailsFacade) {
+        this.propertyDetailsFacade = propertyDetailsFacade;
     }
 
-    @PostMapping("/v1/pre-cancel")
+    @PostMapping("/v1/multi-book-search")
     @ApiOperation(value = "", notes = "PreBook API")
     @ApiResponses(value = {
             @ApiResponse(code = 204, message = "No content", response = ErrorDTO.class),
@@ -41,7 +41,7 @@ public class PreCancelController {
             @ApiResponse(code = 500, message = "Internal Server EmailError", response = ErrorDTO.class)
     })
     @ResponseStatus(HttpStatus.CREATED)
-    public PreCancelResponse handlePreCancel(@RequestBody @Valid PreCancelRequest preCancelRequest) {
-        return preCancelFacade.handlePreCancel(preCancelRequest);
+    public PropertyDetailsResponse handleMultiBookSearch(@RequestBody @Valid PropertyDetailsRequest propertyDetailsRequest) {
+        return propertyDetailsFacade.handleMultiBookSearch(propertyDetailsRequest);
     }
 }

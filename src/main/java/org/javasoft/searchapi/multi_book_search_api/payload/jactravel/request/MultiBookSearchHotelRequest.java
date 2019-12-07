@@ -6,19 +6,26 @@ import org.javasoft.searchapi.payload.travelbeta.request.LoginDetails;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.Date;
 
 /**
  * @author Brume
  **/
 
 @Data
-@XmlRootElement(name = "PreCancelRequest")
-public class PreCancelHotelRequest {
+@XmlRootElement(name = "MultiBookingSearchRequest")
+public class MultiBookSearchHotelRequest {
 
     @XmlElement(name = "LoginDetails")
     private LoginDetails loginDetails;
 
-    @XmlElement(name = "BookingReference")
-    private String bookingReference;
+    @XmlElement(name = "BookingCreationStartDate")
+    private Date bookingCreationStartDate;
+
+    @XmlElement(name = "BookingCreationEndDate")
+    private Date bookingCreationEndDate;
+
+    @XmlElement(name = "AllComponents")
+    private boolean allComponents;
 }
 
