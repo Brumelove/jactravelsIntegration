@@ -28,17 +28,17 @@ public class BookMapperUtil {
 
 
     public Function<BookHotelResponse, BookResponse> mapBookResponse = bookHotelResponse -> {
-        val preResponse = new BookResponse();
-        preResponse.setCurrencyID(bookHotelResponse.getCurrencyID());
-        preResponse.setReturnStatus(bookHotelResponse.getReturnStatus());
-        preResponse.setBookingReference(bookHotelResponse.getBookingReference());
-        preResponse.setCustomerTotalPrice(bookHotelResponse.getCustomerTotalPrice());
-        preResponse.setPaymentDue(bookHotelResponse.getPaymentDue());
-        preResponse.setTotalCommission(bookHotelResponse.getCustomerTotalPrice());
-        preResponse.setPropertyBookings(bookHotelResponse.getPropertyBookings());
-        preResponse.setTradeReference(bookHotelResponse.getTradeReference());
-        preResponse.setCustomerTotalPrice(bookHotelResponse.getCustomerTotalPrice());
-        return preResponse;
+        val bookResponse = new BookResponse();
+        bookResponse.setCurrencyID(bookHotelResponse.getCurrencyID());
+        bookResponse.setReturnStatus(bookHotelResponse.getReturnStatus());
+        bookResponse.setBookingReference(bookHotelResponse.getBookingReference());
+        bookResponse.setCustomerTotalPrice(bookHotelResponse.getCustomerTotalPrice());
+        bookResponse.setPaymentDue(bookHotelResponse.getPaymentDue());
+        bookResponse.setTotalCommission(bookHotelResponse.getCustomerTotalPrice());
+        bookResponse.setPropertyBookings(bookHotelResponse.getPropertyBookings());
+        bookResponse.setTradeReference(bookHotelResponse.getTradeReference());
+        bookResponse.setCustomerTotalPrice(bookHotelResponse.getCustomerTotalPrice());
+        return bookResponse;
     };
 
     public Function<BookRequest, BookHotelRequest> mapBookHotelRequest = bookRequest -> {

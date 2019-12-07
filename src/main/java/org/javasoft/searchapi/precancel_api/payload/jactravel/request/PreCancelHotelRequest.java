@@ -1,4 +1,4 @@
-package org.javasoft.searchapi.booking_api.payload.jactravel.request;
+package org.javasoft.searchapi.precancel_api.payload.jactravel.request;
 
 
 import lombok.Data;
@@ -12,13 +12,13 @@ import javax.xml.bind.annotation.XmlRootElement;
  **/
 
 @Data
-@XmlRootElement(name = "BookRequest")
-public class BookHotelRequest {
+@XmlRootElement(name = "PreCancelRequest")
+public class PreCancelHotelRequest {
 
     @XmlElement(name = "LoginDetails")
     private LoginDetails loginDetails;
 
-    @XmlElement(name = "BookingDetails")
-    private BookingDetails bookingDetails;
+    @XmlElement(name = "BookingReference")
+    private String bookingReference;
 }
 

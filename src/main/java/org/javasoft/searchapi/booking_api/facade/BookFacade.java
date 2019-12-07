@@ -58,7 +58,7 @@ public class BookFacade {
     }
 
     public BookResponse handlePreBook(BookRequest bookRequest) {
-        val redisKey = buildPreBookRequestKey(bookRequest);
+        val redisKey = buildBookRequestKey(bookRequest);
         log.info("Query Key :::: {}", redisKey);
         val isKeyAvailable = redisTemplate.hasKey(redisKey);
         BookResponse bookResponse;
@@ -86,15 +86,13 @@ public class BookFacade {
         return valueOperations.get(redisKey);
     }
 
-    private String buildPreBookRequestKey(BookRequest bookRequest) {
+    private String buildBookRequestKey(BookRequest bookRequest) {
         val stringBuilder = new StringBuilder();
         return stringBuilder.append(
                 bookRequest.getArrivalDate())
                 .append(bookRequest.getDuration())
                 .append(bookRequest.getPropertyID())
-                .append(bookRequest.getLeadGuestBookingCountryID())
                 .append(bookRequest.getLeadGuestPhone())
-
                 .toString();
     }
 }

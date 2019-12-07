@@ -94,7 +94,6 @@ public class PreBookFacade {
                 preBookRequest.getArrivalDate())
                 .append(preBookRequest.getDuration())
                 .append(preBookRequest.getPropertyID())
-                .append(preBookRequest.getPreRoomBookings())
                 .toString();
     }
 }

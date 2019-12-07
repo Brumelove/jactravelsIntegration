@@ -14,7 +14,7 @@ import java.util.List;
  * @author Brume
  **/
 @Data
-@XmlRootElement(name = "PreBookResponse")
+@XmlRootElement(name = "4eBookResponse")
 public class PreBookHotelResponse implements Serializable {
 
     @XmlElement(name = "ReturnStatus")
