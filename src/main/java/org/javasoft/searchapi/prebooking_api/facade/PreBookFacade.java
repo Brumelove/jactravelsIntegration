@@ -3,7 +3,7 @@ package org.javasoft.searchapi.prebooking_api.facade;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.javasoft.searchapi.config.TravelBetaConfig;
-import org.javasoft.searchapi.exception.SearchAPIException;
+import org.javasoft.searchapi.exception.JacTravelAPIException;
 import org.javasoft.searchapi.prebooking_api.payload.client.PreBookRequest;
 import org.javasoft.searchapi.prebooking_api.payload.client.PreBookResponse;
 import org.javasoft.searchapi.prebooking_api.service.PreBookingRestService;
@@ -54,7 +54,7 @@ public class PreBookFacade {
         }
         if (!preBookHotelResponse.getReturnStatus().isSuccess()) {
             log.info("Exception ::: {}", preBookHotelResponse.getReturnStatus().getException());
-            throw new SearchAPIException(INTERNAL_ERROR_TYPE, preBookHotelResponse.getReturnStatus().getException());
+            throw new JacTravelAPIException(INTERNAL_ERROR_TYPE, preBookHotelResponse.getReturnStatus().getException());
         }
         return preBookMapperUtl.mapPreBookRessponse.apply(preBookHotelResponse);
     }
@@ -79,7 +79,7 @@ public class PreBookFacade {
                 return preBookResponse;
             }
         }
-        throw new SearchAPIException(INTERNAL_ERROR_TYPE, "Record Not Found");
+        throw new JacTravelAPIException(INTERNAL_ERROR_TYPE, "Record Not Found");
     }
 
 

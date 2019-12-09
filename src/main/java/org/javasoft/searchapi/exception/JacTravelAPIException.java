@@ -7,11 +7,11 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class SearchAPIException extends RuntimeException{
+public class JacTravelAPIException extends RuntimeException{
 
     private ErrorDTO errorDTO;
 
-    public SearchAPIException(String errorType , String errorName){
+    public JacTravelAPIException(String errorType , String errorName){
         errorDTO = new ErrorDTO();
         errorDTO.setErrorType(errorType);
         errorDTO.setErrorMessage(errorName);

@@ -6,7 +6,9 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.List;
 
 @Data
 @XmlRootElement(name = "RoomType")
@@ -62,4 +64,20 @@ public class RoomType {
 
     @XmlElement(name = "Children")
     private Integer children;
+
+    @XmlElement(name = "Adjustment")
+    @XmlElementWrapper(name = "Adjustments")
+    private List<Adjustment> adjustments;
+
+    @XmlElement(name = "Erratum")
+    @XmlElementWrapper(name = "Errata")
+    private List<Erratum> errata;
+
+    @XmlElement(name = "Cancellation")
+    @XmlElementWrapper(name = "Cancellations")
+    private List<Cancellation> cancellations;
+
+    private AmountDisplayPojo minAmount;
+
+    private Boolean selected = false;
 }

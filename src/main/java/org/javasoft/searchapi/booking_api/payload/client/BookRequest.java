@@ -19,8 +19,6 @@ public class BookRequest {
 
     private Integer duration;
 
-    private List<RoomBooking> roomBookings;
-
     private String preBookingToken;
 
     private String leadGuestTitle;
@@ -50,5 +48,7 @@ public class BookRequest {
     private String request;
 
     private String tradeReference;
+
+    private List<RoomBooking> roomBookings;
 }
 

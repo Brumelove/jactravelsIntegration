@@ -15,13 +15,13 @@ import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
-public class MultiBookSearchRestService {
+public class PropertyDetailsRestService {
 
     private final RestTemplateBean restTemplateBean;
 
     private final EncodeUtil<PropertyDetailsHotelRequest, PropertyDetailsHotelResponse> encodeUtil;
 
-    public MultiBookSearchRestService(RestTemplateBean restTemplateBean, EncodeUtil<PropertyDetailsHotelRequest, PropertyDetailsHotelResponse> encodeUtil) {
+    public PropertyDetailsRestService(RestTemplateBean restTemplateBean, EncodeUtil<PropertyDetailsHotelRequest, PropertyDetailsHotelResponse> encodeUtil) {
         this.restTemplateBean = restTemplateBean;
         this.encodeUtil = encodeUtil;
     }
@@ -29,7 +29,7 @@ public class MultiBookSearchRestService {
 
 
 
-    public PropertyDetailsHotelResponse handleMultiBookSearchHotel(PropertyDetailsHotelRequest propertyDetailsHotelRequest) {
+    public PropertyDetailsHotelResponse handlePropertyDetailsHotel(PropertyDetailsHotelRequest propertyDetailsHotelRequest) {
         val encodedString = encodeUtil.convertObjectToEncodedString(propertyDetailsHotelRequest);
         log.info("Encoded String ::: {}", encodedString);
         val responseString = restTemplateBean.postRequestObject(encodedString);

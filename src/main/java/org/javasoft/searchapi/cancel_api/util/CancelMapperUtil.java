@@ -28,8 +28,7 @@ public class CancelMapperUtil {
 
     public Function<CancelHotelResponse, CancelResponse> mapCancelResponse = cancelHotelResponse -> {
         val cancelResponse = new CancelResponse();
-
-        cancelHotelResponse.setReturnStatus(cancelHotelResponse.getReturnStatus());
+        cancelResponse.setReturnStatus(cancelHotelResponse.getReturnStatus());
         return cancelResponse;
     };
 
@@ -38,10 +37,10 @@ public class CancelMapperUtil {
 
         val loginDetails = getLoginDetails();
 
-//        val bookingDetails = new PreCancelDetails();
-//
         cancelHotelRequest.setLoginDetails(loginDetails);
-//        cancelHotelRequest.setPreCancelDetails(bookingDetails);
+        cancelHotelRequest.setBookingReference(cancelRequest.getBookingReference());
+        cancelHotelRequest.setCancellationCost(cancelRequest.getCancellationCost());
+        cancelHotelRequest.setCancellationToken(cancelRequest.getCancellationToken());
 
         return cancelHotelRequest;
     };

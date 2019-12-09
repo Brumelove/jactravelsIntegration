@@ -1,0 +1,95 @@
+package org.javasoft.searchapi.book_search_api.facade;
+
+import lombok.extern.slf4j.Slf4j;
+import lombok.val;
+import org.javasoft.searchapi.config.TravelBetaConfig;
+import org.javasoft.searchapi.exception.JacTravelAPIException;
+import org.javasoft.searchapi.book_search_api.payload.client.BookSearchRequest;
+import org.javasoft.searchapi.book_search_api.payload.client.BookSearchResponse;
+import org.javasoft.searchapi.book_search_api.service.BookSearchRestService;
+import org.javasoft.searchapi.book_search_api.util.BookSearchMapperUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Service;
+
+import java.util.concurrent.TimeUnit;
+
+import static org.javasoft.searchapi.exception.ErrorMsg.INTERNAL_ERROR_TYPE;
+
+
+/**
+ * @author Brume
+ **/
+
+@Slf4j
+@Service
+public class BookSearchFacade {
+    private final TravelBetaConfig travelBetaConfig;
+
+    private final BookSearchRestService bookSearchRestService;
+
+    private final BookSearchMapperUtil bookSearchMapperUtil;
+
+    private final RedisTemplate<String, BookSearchResponse> redisTemplate;
+
+    @Autowired
+    public BookSearchFacade(TravelBetaConfig travelBetaConfig, BookSearchRestService bookSearchRestService, BookSearchMapperUtil bookSearchMapperUtil, RedisTemplate<String, BookSearchResponse> redisTemplate) {
+        this.travelBetaConfig = travelBetaConfig;
+        this.bookSearchRestService = bookSearchRestService;
+        this.bookSearchMapperUtil = bookSearchMapperUtil;
+        this.redisTemplate = redisTemplate;
+    }
+
+
+    private BookSearchResponse MultiBookSearchJacTravels(BookSearchRequest bookSearchRequest) {
+
+        val bookSearchHotelRequest = bookSearchMapperUtil.mapbookSearchHotelRequest.apply(bookSearchRequest);
+
+        val bookSearchHotelResponse = bookSearchRestService.handleBookSearchHotel(bookSearchHotelRequest);
+
+        if (bookSearchHotelResponse == null) {
+            return null;
+        }
+        if (!bookSearchHotelResponse.getReturnStatus().isSuccess()) {
+            log.info("Exception ::: {}", bookSearchHotelResponse.getReturnStatus().getException());
+            throw new JacTravelAPIException(INTERNAL_ERROR_TYPE, bookSearchHotelResponse.getReturnStatus().getException());
+        }
+        return bookSearchMapperUtil.mapPreCancelResponse.apply(bookSearchHotelResponse);
+    }
+
+    public BookSearchResponse handleMultiBookSearch(BookSearchRequest bookSearchRequest) {
+        val redisKey = buildBookSearchRequestKey(bookSearchRequest);
+        log.info("Query Key :::: {}", redisKey);
+        val isKeyAvailable = redisTemplate.hasKey(redisKey);
+        BookSearchResponse bookSearchResponse;
+        if (isKeyAvailable) {
+            log.info("============= Key Found in Redis Cache =========");
+            return checkRedisCache(redisKey);
+        } else {
+            log.info("============= Key Not Found Checking API =========");
+            bookSearchResponse = MultiBookSearchJacTravels(bookSearchRequest);
+
+            if (bookSearchResponse != null) {
+                log.info("============= Updating Redis Cache with Key =========");
+                val valueOperations = redisTemplate.opsForValue();
+                valueOperations.set(redisKey, bookSearchResponse, travelBetaConfig.getCacheExpiryHours(), TimeUnit.HOURS);
+
+                return bookSearchResponse;
+            }
+        }
+        throw new JacTravelAPIException(INTERNAL_ERROR_TYPE, "Record Not Found");
+    }
+
+
+    private BookSearchResponse checkRedisCache(String redisKey) {
+        val valueOperations = redisTemplate.opsForValue();
+        return valueOperations.get(redisKey);
+    }
+
+    private String buildBookSearchRequestKey(BookSearchRequest bookSearchRequest) {
+        val stringBuilder = new StringBuilder();
+        return stringBuilder.append(
+                bookSearchRequest.getBookingReference())
+                .toString();
+    }
+}

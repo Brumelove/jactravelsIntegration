@@ -3,7 +3,7 @@ package org.javasoft.searchapi.precancel_api.facade;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.javasoft.searchapi.config.TravelBetaConfig;
-import org.javasoft.searchapi.exception.SearchAPIException;
+import org.javasoft.searchapi.exception.JacTravelAPIException;
 import org.javasoft.searchapi.precancel_api.payload.client.PreCancelRequest;
 import org.javasoft.searchapi.precancel_api.payload.client.PreCancelResponse;
 import org.javasoft.searchapi.precancel_api.service.PreCancelRestService;
@@ -54,7 +54,7 @@ public class PreCancelFacade {
         }
         if (!preCancelHotelResponse.getReturnStatus().isSuccess()) {
             log.info("Exception ::: {}", preCancelHotelResponse.getReturnStatus().getException());
-            throw new SearchAPIException(INTERNAL_ERROR_TYPE, preCancelHotelResponse.getReturnStatus().getException());
+            throw new JacTravelAPIException(INTERNAL_ERROR_TYPE, preCancelHotelResponse.getReturnStatus().getException());
         }
         return preCancelMapperUtil.mapPreCancelResponse.apply(preCancelHotelResponse);
     }
@@ -79,7 +79,7 @@ public class PreCancelFacade {
                 return preCancelResponse;
             }
         }
-        throw new SearchAPIException(INTERNAL_ERROR_TYPE, "Record Not Found");
+        throw new JacTravelAPIException(INTERNAL_ERROR_TYPE, "Record Not Found");
     }
 
 

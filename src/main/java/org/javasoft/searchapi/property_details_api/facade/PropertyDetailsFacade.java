@@ -3,11 +3,11 @@ package org.javasoft.searchapi.property_details_api.facade;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.javasoft.searchapi.config.TravelBetaConfig;
-import org.javasoft.searchapi.exception.SearchAPIException;
+import org.javasoft.searchapi.exception.JacTravelAPIException;
 import org.javasoft.searchapi.property_details_api.payload.client.PropertyDetailsRequest;
 import org.javasoft.searchapi.property_details_api.payload.client.PropertyDetailsResponse;
-import org.javasoft.searchapi.property_details_api.service.MultiBookSearchRestService;
-import org.javasoft.searchapi.property_details_api.util.MultiBookSearchMapperUtil;
+import org.javasoft.searchapi.property_details_api.service.PropertyDetailsRestService;
+import org.javasoft.searchapi.property_details_api.util.PropertyDetailsMapperUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -26,35 +26,35 @@ import static org.javasoft.searchapi.exception.ErrorMsg.INTERNAL_ERROR_TYPE;
 public class PropertyDetailsFacade {
     private final TravelBetaConfig travelBetaConfig;
 
-    private final MultiBookSearchRestService multiBookSearchRestService;
+    private final PropertyDetailsRestService propertyDetailsRestService;
 
-    private final MultiBookSearchMapperUtil multiBookSearchMapperUtil;
+    private final PropertyDetailsMapperUtil propertyDetailsMapperUtil;
 
     private final RedisTemplate<String, PropertyDetailsResponse> redisTemplate;
 
     @Autowired
-    public PropertyDetailsFacade(TravelBetaConfig travelBetaConfig, MultiBookSearchRestService multiBookSearchRestService, MultiBookSearchMapperUtil multiBookSearchMapperUtil, RedisTemplate<String, PropertyDetailsResponse> redisTemplate) {
+    public PropertyDetailsFacade(TravelBetaConfig travelBetaConfig, PropertyDetailsRestService propertyDetailsRestService, PropertyDetailsMapperUtil propertyDetailsMapperUtil, RedisTemplate<String, PropertyDetailsResponse> redisTemplate) {
         this.travelBetaConfig = travelBetaConfig;
-        this.multiBookSearchRestService = multiBookSearchRestService;
-        this.multiBookSearchMapperUtil = multiBookSearchMapperUtil;
+        this.propertyDetailsRestService = propertyDetailsRestService;
+        this.propertyDetailsMapperUtil = propertyDetailsMapperUtil;
         this.redisTemplate = redisTemplate;
     }
 
 
     private PropertyDetailsResponse MultiBookSearchJacTravels(PropertyDetailsRequest propertyDetailsRequest) {
 
-        val multiBookSearchHotelRequest = multiBookSearchMapperUtil.mapMultiBookSearchHotelRequest.apply(propertyDetailsRequest);
+        val propertyDetailsHotelRequest = propertyDetailsMapperUtil.mapPropertyDetailsHotelRequest.apply(propertyDetailsRequest);
 
-        val multiBookSearchHotelResponse = multiBookSearchRestService.handleMultiBookSearchHotel(multiBookSearchHotelRequest);
+        val propertyDetailsHotelResponse = propertyDetailsRestService.handlePropertyDetailsHotel(propertyDetailsHotelRequest);
 
-        if (multiBookSearchHotelResponse == null) {
+        if (propertyDetailsHotelResponse == null) {
             return null;
         }
-        if (!multiBookSearchHotelResponse.getReturnStatus().isSuccess()) {
-            log.info("Exception ::: {}", multiBookSearchHotelResponse.getReturnStatus().getException());
-            throw new SearchAPIException(INTERNAL_ERROR_TYPE, multiBookSearchHotelResponse.getReturnStatus().getException());
+        if (!propertyDetailsHotelResponse.getReturnStatus().isSuccess()) {
+            log.info("Exception ::: {}", propertyDetailsHotelResponse.getReturnStatus().getException());
+            throw new JacTravelAPIException(INTERNAL_ERROR_TYPE, propertyDetailsHotelResponse.getReturnStatus().getException());
         }
-        return multiBookSearchMapperUtil.mapPreCancelResponse.apply(multiBookSearchHotelResponse);
+        return propertyDetailsMapperUtil.mapPropertyDetailsResponse.apply(propertyDetailsHotelResponse);
     }
 
     public PropertyDetailsResponse handleMultiBookSearch(PropertyDetailsRequest propertyDetailsRequest) {
@@ -77,7 +77,7 @@ public class PropertyDetailsFacade {
                 return propertyDetailsResponse;
             }
         }
-        throw new SearchAPIException(INTERNAL_ERROR_TYPE, "Record Not Found");
+        throw new JacTravelAPIException(INTERNAL_ERROR_TYPE, "Record Not Found");
     }
 
 
@@ -89,8 +89,8 @@ public class PropertyDetailsFacade {
     private String buildPreCancelRequestKey(PropertyDetailsRequest propertyDetailsRequest) {
         val stringBuilder = new StringBuilder();
         return stringBuilder.append(
-                propertyDetailsRequest.getBookingCreationEndDate())
-                .append(propertyDetailsRequest.getBookingCreationStartDate())
+                propertyDetailsRequest.getPropertyID())
+                .append(propertyDetailsRequest.getPropertyReferenceID())
                 .toString();
     }
 }

@@ -29,7 +29,7 @@ public class PreCancelMapperUtil {
     public Function<PreCancelHotelResponse, PreCancelResponse> mapPreCancelResponse = preCancelHotelResponse -> {
         val preCancelResponse = new PreCancelResponse();
         preCancelResponse.setCurrencyID(preCancelResponse.getCurrencyID());
-        preCancelHotelResponse.setReturnStatus(preCancelHotelResponse.getReturnStatus());
+        preCancelResponse.setReturnStatus(preCancelHotelResponse.getReturnStatus());
         preCancelResponse.setBookingReference(preCancelHotelResponse.getBookingReference());
         preCancelResponse.setCancellationCost(preCancelHotelResponse.getCancellationCost());
         preCancelResponse.setCancellationToken(preCancelHotelResponse.getCancellationToken());
@@ -39,6 +39,7 @@ public class PreCancelMapperUtil {
 
     public Function<PreCancelRequest, PreCancelHotelRequest> mapPreCancelHotelRequest = preCancelRequest -> {
         val preCancelHotelRequest = new PreCancelHotelRequest();
+        preCancelHotelRequest.setBookingReference(preCancelRequest.getBookingReference());
 
         val loginDetails = getLoginDetails();
 

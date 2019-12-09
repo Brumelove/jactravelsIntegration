@@ -3,7 +3,7 @@ package org.javasoft.searchapi.multi_book_search_api.facade;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.javasoft.searchapi.config.TravelBetaConfig;
-import org.javasoft.searchapi.exception.SearchAPIException;
+import org.javasoft.searchapi.exception.JacTravelAPIException;
 import org.javasoft.searchapi.multi_book_search_api.payload.client.MultiBookSearchRequest;
 import org.javasoft.searchapi.multi_book_search_api.payload.client.MultiBookSearchResponse;
 import org.javasoft.searchapi.multi_book_search_api.service.MultiBookSearchRestService;
@@ -52,7 +52,7 @@ public class MultiBookSearchFacade {
         }
         if (!multiBookSearchHotelResponse.getReturnStatus().isSuccess()) {
             log.info("Exception ::: {}", multiBookSearchHotelResponse.getReturnStatus().getException());
-            throw new SearchAPIException(INTERNAL_ERROR_TYPE, multiBookSearchHotelResponse.getReturnStatus().getException());
+            throw new JacTravelAPIException(INTERNAL_ERROR_TYPE, multiBookSearchHotelResponse.getReturnStatus().getException());
         }
         return multiBookSearchMapperUtil.mapPreCancelResponse.apply(multiBookSearchHotelResponse);
     }
@@ -77,7 +77,7 @@ public class MultiBookSearchFacade {
                 return multiBookSearchResponse;
             }
         }
-        throw new SearchAPIException(INTERNAL_ERROR_TYPE, "Record Not Found");
+        throw new JacTravelAPIException(INTERNAL_ERROR_TYPE, "Record Not Found");
     }
 
 

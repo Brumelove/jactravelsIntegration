@@ -30,10 +30,10 @@ public class BookHotelResponse implements Serializable {
     private String tradeReference;
 
     @XmlElement(name = "TotalPrice")
-    private Integer totalPrice;
+    private Double totalPrice;
 
     @XmlElement(name = "TotalCommission")
-    private Integer totalCommission;
+    private Double totalCommission;
 
     @XmlElement(name = "CustomerTotalPrice")
     private Double customerTotalPrice;

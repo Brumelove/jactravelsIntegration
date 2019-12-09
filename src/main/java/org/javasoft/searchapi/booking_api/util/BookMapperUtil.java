@@ -34,7 +34,7 @@ public class BookMapperUtil {
         bookResponse.setBookingReference(bookHotelResponse.getBookingReference());
         bookResponse.setCustomerTotalPrice(bookHotelResponse.getCustomerTotalPrice());
         bookResponse.setPaymentDue(bookHotelResponse.getPaymentDue());
-        bookResponse.setTotalCommission(bookHotelResponse.getCustomerTotalPrice());
+        bookResponse.setTotalCommission(bookHotelResponse.getTotalCommission());
         bookResponse.setPropertyBookings(bookHotelResponse.getPropertyBookings());
         bookResponse.setTradeReference(bookHotelResponse.getTradeReference());
         bookResponse.setCustomerTotalPrice(bookHotelResponse.getCustomerTotalPrice());

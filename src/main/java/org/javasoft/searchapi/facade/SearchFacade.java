@@ -3,7 +3,7 @@ package org.javasoft.searchapi.facade;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.javasoft.searchapi.config.TravelBetaConfig;
-import org.javasoft.searchapi.exception.SearchAPIException;
+import org.javasoft.searchapi.exception.JacTravelAPIException;
 import org.javasoft.searchapi.payload.client.SearchRequest;
 import org.javasoft.searchapi.payload.client.SearchResponse;
 import org.javasoft.searchapi.service.db.HotelDbService;
@@ -68,7 +68,7 @@ public class SearchFacade {
                 return searchResponse ;
             }
         }
-        throw new SearchAPIException(INTERNAL_ERROR_TYPE , "Record Not Found");
+        throw new JacTravelAPIException(INTERNAL_ERROR_TYPE , "Record Not Found");
     }
 
     private SearchResponse callTravelBetaAPI(SearchRequest searchRequest){
@@ -79,7 +79,7 @@ public class SearchFacade {
         }
         if(!searchHotelResponse.getReturnStatus().isSuccess()){
             log.info("Exception ::: {}", searchHotelResponse.getReturnStatus().getException());
-            throw new SearchAPIException(INTERNAL_ERROR_TYPE , searchHotelResponse.getReturnStatus().getException());
+            throw new JacTravelAPIException(INTERNAL_ERROR_TYPE , searchHotelResponse.getReturnStatus().getException());
         }
         return mapperUtil.mapSearchResponse.apply(searchHotelResponse);
     }

@@ -7,7 +7,7 @@ import org.javasoft.searchapi.booking_api.payload.client.BookResponse;
 import org.javasoft.searchapi.booking_api.service.BookingRestService;
 import org.javasoft.searchapi.booking_api.util.BookMapperUtil;
 import org.javasoft.searchapi.config.TravelBetaConfig;
-import org.javasoft.searchapi.exception.SearchAPIException;
+import org.javasoft.searchapi.exception.JacTravelAPIException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -52,7 +52,7 @@ public class BookFacade {
         }
         if (!bookHotelResponse.getReturnStatus().isSuccess()) {
             log.info("Exception ::: {}", bookHotelResponse.getReturnStatus().getException());
-            throw new SearchAPIException(INTERNAL_ERROR_TYPE, bookHotelResponse.getReturnStatus().getException());
+            throw new JacTravelAPIException(INTERNAL_ERROR_TYPE, bookHotelResponse.getReturnStatus().getException());
         }
         return bookMapperUtil.mapBookResponse.apply(bookHotelResponse);
     }
@@ -77,7 +77,7 @@ public class BookFacade {
                 return bookResponse;
             }
         }
-        throw new SearchAPIException(INTERNAL_ERROR_TYPE, "Record Not Found");
+        throw new JacTravelAPIException(INTERNAL_ERROR_TYPE, "Record Not Found");
     }
 
 

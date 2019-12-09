@@ -7,7 +7,7 @@ import org.javasoft.searchapi.cancel_api.payload.client.CancelResponse;
 import org.javasoft.searchapi.cancel_api.service.CancelRestService;
 import org.javasoft.searchapi.cancel_api.util.CancelMapperUtil;
 import org.javasoft.searchapi.config.TravelBetaConfig;
-import org.javasoft.searchapi.exception.SearchAPIException;
+import org.javasoft.searchapi.exception.JacTravelAPIException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -52,7 +52,7 @@ public class CancelFacade {
         }
         if (!cancelHotelResponse.getReturnStatus().isSuccess()) {
             log.info("Exception ::: {}", cancelHotelResponse.getReturnStatus().getException());
-            throw new SearchAPIException(INTERNAL_ERROR_TYPE, cancelHotelResponse.getReturnStatus().getException());
+            throw new JacTravelAPIException(INTERNAL_ERROR_TYPE, cancelHotelResponse.getReturnStatus().getException());
         }
         return cancelMapperUtil.mapCancelResponse.apply(cancelHotelResponse);
     }
@@ -77,7 +77,7 @@ public class CancelFacade {
                 return cancelResponse;
             }
         }
-        throw new SearchAPIException(INTERNAL_ERROR_TYPE, "Record Not Found");
+        throw new JacTravelAPIException(INTERNAL_ERROR_TYPE, "Record Not Found");
     }
 
 
