@@ -1,5 +1,6 @@
 package org.javasoft.searchapi.multi_book_search_api.payload.jactravel.response;
 
+import lombok.Data;
 import org.javasoft.searchapi.payload.travelbeta.request.RoomInfo;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -12,7 +13,7 @@ import java.util.List;
 /**
  * @author Brume
  **/
-
+@Data
 @XmlRootElement(name = "Booking")
 public class Booking implements Serializable {
 

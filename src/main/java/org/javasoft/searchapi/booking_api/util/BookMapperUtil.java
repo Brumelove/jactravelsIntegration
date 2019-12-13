@@ -69,6 +69,7 @@ public class BookMapperUtil {
         bookHotelRequest.setLoginDetails(loginDetails);
         bookHotelRequest.setBookingDetails(bookingDetails);
 
+
         return bookHotelRequest;
     };
 

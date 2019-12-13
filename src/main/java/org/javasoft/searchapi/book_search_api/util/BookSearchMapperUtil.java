@@ -26,7 +26,7 @@ public class BookSearchMapperUtil {
     }
 
 
-    public Function<BookSearchHotelResponse, BookSearchResponse> mapPreCancelResponse = bookSearchHotelResponse -> {
+    public Function<BookSearchHotelResponse, BookSearchResponse> mapBookSearchResponse = bookSearchHotelResponse -> {
         val bookSearchResponse = new BookSearchResponse();
         bookSearchResponse.setReturnStatus(bookSearchHotelResponse.getReturnStatus());
         bookSearchResponse.setAccountStatus(bookSearchHotelResponse.getAccountStatus());
@@ -57,7 +57,7 @@ public class BookSearchMapperUtil {
         return bookSearchResponse;
     };
 
-    public Function<BookSearchRequest, BookSearchHotelRequest> mapbookSearchHotelRequest = bookSearchRequest -> {
+    public Function<BookSearchRequest, BookSearchHotelRequest> mapBookSearchHotelRequest = bookSearchRequest -> {
         val bookSearchHotelRequest = new BookSearchHotelRequest();
 
         val loginDetails = getLoginDetails();

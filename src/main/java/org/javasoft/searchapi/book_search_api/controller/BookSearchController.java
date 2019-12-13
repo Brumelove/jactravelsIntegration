@@ -33,7 +33,7 @@ public class BookSearchController {
     }
 
     @PostMapping("/v1/book-search")
-    @ApiOperation(value = "", notes = "PreBook API")
+    @ApiOperation(value = "", notes = "BookSearch API")
     @ApiResponses(value = {
             @ApiResponse(code = 204, message = "No content", response = ErrorDTO.class),
             @ApiResponse(code = 400, message = "Bad Request", response = ErrorDTO.class),
@@ -41,7 +41,7 @@ public class BookSearchController {
             @ApiResponse(code = 500, message = "Internal Server EmailError", response = ErrorDTO.class)
     })
     @ResponseStatus(HttpStatus.CREATED)
-    public BookSearchResponse handleMultiBookSearch(@RequestBody @Valid BookSearchRequest bookSearchRequest) {
-        return bookSearchFacade.handleMultiBookSearch(bookSearchRequest);
+    public BookSearchResponse handleBookSearch(@RequestBody @Valid BookSearchRequest bookSearchRequest) {
+        return bookSearchFacade.handleBookSearch(bookSearchRequest);
     }
 }

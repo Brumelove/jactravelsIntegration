@@ -13,7 +13,7 @@ import java.util.Date;
  **/
 
 @Data
-@XmlRootElement(name = "MultiBookingSearchRequest")
+@XmlRootElement(name = "BookRequest")
 public class BookSearchHotelRequest {
 
     @XmlElement(name = "LoginDetails")

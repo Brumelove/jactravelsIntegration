@@ -43,10 +43,8 @@ public class PreCancelMapperUtil {
 
         val loginDetails = getLoginDetails();
 
-//        val bookingDetails = new PreCancelDetails();
-//
-      preCancelHotelRequest.setLoginDetails(loginDetails);
-//        preCancelHotelRequest.setPreCancelDetails(bookingDetails);
+        preCancelHotelRequest.setLoginDetails(loginDetails);
+        preCancelHotelRequest.setBookingReference(preCancelRequest.getBookingReference());
 
         return preCancelHotelRequest;
     };

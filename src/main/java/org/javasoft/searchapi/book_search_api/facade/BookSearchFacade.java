@@ -41,9 +41,9 @@ public class BookSearchFacade {
     }
 
 
-    private BookSearchResponse MultiBookSearchJacTravels(BookSearchRequest bookSearchRequest) {
+    private BookSearchResponse BookSearchJacTravels(BookSearchRequest bookSearchRequest) {
 
-        val bookSearchHotelRequest = bookSearchMapperUtil.mapbookSearchHotelRequest.apply(bookSearchRequest);
+        val bookSearchHotelRequest = bookSearchMapperUtil.mapBookSearchHotelRequest.apply(bookSearchRequest);
 
         val bookSearchHotelResponse = bookSearchRestService.handleBookSearchHotel(bookSearchHotelRequest);
 
@@ -54,10 +54,10 @@ public class BookSearchFacade {
             log.info("Exception ::: {}", bookSearchHotelResponse.getReturnStatus().getException());
             throw new JacTravelAPIException(INTERNAL_ERROR_TYPE, bookSearchHotelResponse.getReturnStatus().getException());
         }
-        return bookSearchMapperUtil.mapPreCancelResponse.apply(bookSearchHotelResponse);
+        return bookSearchMapperUtil.mapBookSearchResponse.apply(bookSearchHotelResponse);
     }
 
-    public BookSearchResponse handleMultiBookSearch(BookSearchRequest bookSearchRequest) {
+    public BookSearchResponse handleBookSearch(BookSearchRequest bookSearchRequest) {
         val redisKey = buildBookSearchRequestKey(bookSearchRequest);
         log.info("Query Key :::: {}", redisKey);
         val isKeyAvailable = redisTemplate.hasKey(redisKey);
@@ -67,7 +67,7 @@ public class BookSearchFacade {
             return checkRedisCache(redisKey);
         } else {
             log.info("============= Key Not Found Checking API =========");
-            bookSearchResponse = MultiBookSearchJacTravels(bookSearchRequest);
+            bookSearchResponse = BookSearchJacTravels(bookSearchRequest);
 
             if (bookSearchResponse != null) {
                 log.info("============= Updating Redis Cache with Key =========");
@@ -90,6 +90,7 @@ public class BookSearchFacade {
         val stringBuilder = new StringBuilder();
         return stringBuilder.append(
                 bookSearchRequest.getBookingReference())
+                .append(2)
                 .toString();
     }
 }

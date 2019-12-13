@@ -37,14 +37,16 @@ public class MultiBookSearchMapperUtil {
     };
 
     public Function<MultiBookSearchRequest, MultiBookSearchHotelRequest> mapMultiBookSearchHotelRequest = multiBookSearchRequest -> {
-        val preCancelHotelRequest = new MultiBookSearchHotelRequest();
+        val multiBookSearchHotelRequest = new MultiBookSearchHotelRequest();
 
         val loginDetails = getLoginDetails();
 
-        preCancelHotelRequest.setLoginDetails(loginDetails);
+        multiBookSearchHotelRequest.setLoginDetails(loginDetails);
+        multiBookSearchHotelRequest.setBookingCreationEndDate(multiBookSearchRequest.getBookingCreationEndDate());
+        multiBookSearchHotelRequest.setBookingCreationStartDate(multiBookSearchRequest.getBookingCreationStartDate());
+        multiBookSearchHotelRequest.setAllComponents(multiBookSearchRequest.isAllComponents());
 
-
-        return preCancelHotelRequest;
+        return multiBookSearchHotelRequest;
     };
 
     private LoginDetails getLoginDetails() {
