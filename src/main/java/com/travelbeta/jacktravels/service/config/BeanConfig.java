@@ -106,7 +106,7 @@ public class BeanConfig {
 
         final JedisConnectionFactory connectionFactory = new JedisConnectionFactory(poolConfig);
         connectionFactory.setUsePool(true);
-        connectionFactory.setHostName("localhost");
+        connectionFactory.setHostName("172.104.156.136");
         connectionFactory.setPort(6379);
         return connectionFactory;
     }
