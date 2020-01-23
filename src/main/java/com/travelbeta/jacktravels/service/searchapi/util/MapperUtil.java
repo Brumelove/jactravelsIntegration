@@ -1,7 +1,5 @@
 package com.travelbeta.jacktravels.service.searchapi.util;
 
-import com.travelbeta.jacktravels.service.searchapi.entity.LocationEntity;
-import lombok.val;
 import com.travelbeta.jacktravels.service.config.TravelBetaConfig;
 import com.travelbeta.jacktravels.service.searchapi.entity.HotelEntity;
 import com.travelbeta.jacktravels.service.searchapi.payload.client.SearchRequest;
@@ -11,6 +9,7 @@ import com.travelbeta.jacktravels.service.searchapi.payload.travelbeta.request.S
 import com.travelbeta.jacktravels.service.searchapi.payload.travelbeta.request.SearchHotelRequest;
 import com.travelbeta.jacktravels.service.searchapi.payload.travelbeta.response.PropertyResult;
 import com.travelbeta.jacktravels.service.searchapi.payload.travelbeta.response.SearchHotelResponse;
+import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -32,11 +31,11 @@ public class MapperUtil {
         propertyResult.setPropertyName(hotelEntity.getName());
         return propertyResult;
     };
-    public Function<LocationEntity, PropertyResult> mapLocationPropertyResult = locationEntity -> {
-        val propertyResult = new PropertyResult();
-        propertyResult.setCountry(String.valueOf(locationEntity.getCountry()));
-        return propertyResult;
-    };
+//    public Function<LocationEntity, PropertyResult> mapLocationPropertyResult = locationEntity -> {
+//        val propertyResult = new PropertyResult();
+//        propertyResult.setCountry(String.valueOf(locationEntity.getCountry()));
+//        return propertyResult;
+//    };
 
     public Function<SearchHotelResponse, SearchResponse> mapSearchResponse = searchHotelResponse -> {
         val searchResponse = new SearchResponse();

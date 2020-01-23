@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
@@ -74,11 +75,12 @@ public class BeanConfig {
 
         return restTemplateBean;
     }
+
     private List<HttpMessageConverter<?>> getMessageConverters() {
         val marshaller = new XStreamMarshaller();
-        val marshallingConverter =  new MarshallingHttpMessageConverter(marshaller);
+        val marshallingConverter = new MarshallingHttpMessageConverter(marshaller);
 
-       val converters = new ArrayList<HttpMessageConverter<?>>();
+        val converters = new ArrayList<HttpMessageConverter<?>>();
         converters.add(marshallingConverter);
         return converters;
     }
@@ -93,7 +95,7 @@ public class BeanConfig {
 
     @Bean
     @Scope(value = SCOPE_PROTOTYPE, proxyMode = TARGET_CLASS)
-    public EncodeUtil encodeUtil(){
+    public EncodeUtil encodeUtil() {
         return new EncodeUtil();
     }
 
@@ -104,11 +106,10 @@ public class BeanConfig {
         poolConfig.setTestOnBorrow(true);
         poolConfig.setTestOnReturn(true);
 
-        final JedisConnectionFactory connectionFactory = new JedisConnectionFactory(poolConfig);
-        connectionFactory.setUsePool(true);
-        connectionFactory.setHostName("172.104.156.136");
-        connectionFactory.setPort(6379);
-        return connectionFactory;
+        val redisStandaloneConfiguration = new RedisStandaloneConfiguration();
+        redisStandaloneConfiguration.setHostName("localhost");
+        redisStandaloneConfiguration.setPort(6379);
+        return new JedisConnectionFactory(redisStandaloneConfiguration);
     }
 
     @Bean

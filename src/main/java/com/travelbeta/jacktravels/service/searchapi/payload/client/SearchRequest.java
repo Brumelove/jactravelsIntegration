@@ -14,7 +14,7 @@ public class SearchRequest {
 
     private Integer regionID;
 
-    private String country;
+//    private String country;
 
     private Integer mealBasisID;
 

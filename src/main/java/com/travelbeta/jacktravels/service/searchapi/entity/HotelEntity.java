@@ -28,11 +28,11 @@ public class HotelEntity extends AbstractPersistable<Long> {
 
     private String check_out_time;
 
-    @Enumerated(EnumType.STRING)
-    private PropertyTypeEnum propertyType; // HOTEL ,SPA_$_RESORT ,VILLA_$_APARTMENT , GUEST_HOUSE , CAMP , LODGES
+//    @Enumerated(EnumType.STRING)
+    private String propertyType; // HOTEL ,SPA_$_RESORT ,VILLA_$_APARTMENT , GUEST_HOUSE , CAMP , LODGES
 
-    @Enumerated(EnumType.STRING)
-    private ReservationPolicyEnum reservationPolicy; // PLI_POLICY ,FREE_CANCELLATION ,PAY_AT_HOTEL
+//    @Enumerated(EnumType.STRING)
+    private String reservationPolicy; // PLI_POLICY ,FREE_CANCELLATION ,PAY_AT_HOTEL
 
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private ImageEntity imageEntity;

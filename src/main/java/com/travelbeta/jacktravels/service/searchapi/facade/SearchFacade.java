@@ -1,8 +1,5 @@
 package com.travelbeta.jacktravels.service.searchapi.facade;
 
-import com.travelbeta.jacktravels.service.searchapi.service.db.LocationDbService;
-import lombok.extern.slf4j.Slf4j;
-import lombok.val;
 import com.travelbeta.jacktravels.service.config.TravelBetaConfig;
 import com.travelbeta.jacktravels.service.exception.JacTravelAPIException;
 import com.travelbeta.jacktravels.service.searchapi.payload.client.SearchRequest;
@@ -10,13 +7,13 @@ import com.travelbeta.jacktravels.service.searchapi.payload.client.SearchRespons
 import com.travelbeta.jacktravels.service.searchapi.service.db.HotelDbService;
 import com.travelbeta.jacktravels.service.searchapi.service.rest.TravelBetaRestService;
 import com.travelbeta.jacktravels.service.searchapi.util.MapperUtil;
+import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
-import java.util.concurrent.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.concurrent.TimeUnit;
 
 import static com.travelbeta.jacktravels.service.exception.ErrorMsg.INTERNAL_ERROR_TYPE;
 
@@ -32,7 +29,7 @@ public class SearchFacade {
 
     @Autowired
     private HotelDbService hotelDbService;
-    private LocationDbService locationDbService;
+//    private LocationDbService locationDbService;
 
     private final RedisTemplate<String, SearchResponse> redisTemplate;
 
@@ -53,24 +50,6 @@ public class SearchFacade {
         val redisKey = buildSearchRequestKey(searchRequest);
         log.info("Query Key :::: {}", redisKey);
         val isKeyAvailable = redisTemplate.hasKey(redisKey);
-
-//        final CompletableFuture<SearchResponse> handleDb = CompletableFuture.supplyAsync(() -> handleSearchDb(searchRequest));
-//        final CompletableFuture<SearchResponse> hnadleAPI = CompletableFuture.supplyAsync(() -> handleSearchAPI(searchRequest));
-//
-//        ExecutorService executor = Executors.newCachedThreadPool();
-//        SearchResponse<Future<?>> = Stream.<Runnable>of(() ->  handleSearchDb(searchRequest), () -> handleSearchAPI(searchRequest))
-//                .map(executor::submit)
-//                .collect(Collectors.toList());
-//        for (Future<?> future : futures) {
-//            try {
-//                future.get(); // do whatever you need here
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            } catch (ExecutionException e) {
-//                e.printStackTrace();
-//            }
-//        }
-
         SearchResponse searchResponse = null;
 
         if (isKeyAvailable) {
@@ -82,7 +61,7 @@ public class SearchFacade {
             if (searchResponse == null) {
                 log.info("============= Key Not Found in DB , Checking API =========");
                 searchResponse = callTravelBetaAPI(searchRequest);
-                //log.info("Search Response :::: {}", searchResponse.toString());
+                log.info("Search Response :::: {}", searchResponse.toString());
             }
             if (searchResponse != null) {
                 log.info("============= Updating Redis Cache with Key =========");
@@ -93,22 +72,6 @@ public class SearchFacade {
             }
         }
         throw new JacTravelAPIException(INTERNAL_ERROR_TYPE, "Record Not Found");
-    }
-    public SearchResponse handleSearchDb(SearchRequest searchRequest) {
-        SearchResponse searchResponse = hotelDbService.findHotel(searchRequest);
-
-        return searchResponse;
-    }
-    public SearchResponse handleSearchAPI(SearchRequest searchRequest) {
-        SearchResponse searchResponse = callTravelBetaAPI(searchRequest);
-
-        return searchResponse;
-    }
-
-    public SearchResponse handleCountry(SearchRequest searchRequest) {
-        SearchResponse countrySearchResponse = locationDbService.findLocationByCountry(searchRequest);
-
-        return countrySearchResponse;
     }
 
     private SearchResponse callTravelBetaAPI(SearchRequest searchRequest) {
