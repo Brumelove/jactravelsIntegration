@@ -149,7 +149,7 @@
                             <goal>repackage</goal>
                         </goals>
                         <configuration>
-                            <mainClass>org.javasoft.searchapi.SearchApiApplication</mainClass>
+                            <mainClass>com.travelbeta.jactravel.service.SearchApiApplication</mainClass>
                             <outputDirectory>${project.basedir}/docker</outputDirectory>
                         </configuration>
                     </execution>
