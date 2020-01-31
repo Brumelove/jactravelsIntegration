@@ -26,7 +26,7 @@ public class MultiBookSearchMapperUtil {
     }
 
 
-    public Function<MultiBookSearchHotelResponse, MultiBookSearchResponse> mapPreCancelResponse = multiBookSearchHotelResponse -> {
+    public Function<MultiBookSearchHotelResponse, MultiBookSearchResponse> mapMultiBookSearchResponse = multiBookSearchHotelResponse -> {
         val multiBookSearchResponse = new MultiBookSearchResponse();
         multiBookSearchResponse.setReturnStatus(multiBookSearchHotelResponse.getReturnStatus());
         multiBookSearchResponse.setBookings(multiBookSearchHotelResponse.getBookings());

@@ -33,7 +33,7 @@ public class PropertyDetailsController {
     }
 
     @PostMapping("/v1/property-details")
-    @ApiOperation(value = "", notes = "PreBook API")
+    @ApiOperation(value = "", notes = "Property details API")
     @ApiResponses(value = {
             @ApiResponse(code = 204, message = "No content", response = ErrorDTO.class),
             @ApiResponse(code = 400, message = "Bad Request", response = ErrorDTO.class),

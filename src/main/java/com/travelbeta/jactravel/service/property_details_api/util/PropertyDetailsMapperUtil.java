@@ -75,6 +75,8 @@ public class PropertyDetailsMapperUtil {
         val loginDetails = getLoginDetails();
 
         propertyDetailsHotelRequest.setLoginDetails(loginDetails);
+        propertyDetailsHotelRequest.setPropertyID(propertyDetailsRequest.getPropertyID());
+        propertyDetailsHotelRequest.setPropertyReferenceID(propertyDetailsRequest.getPropertyReferenceID());
 
 
         return propertyDetailsHotelRequest;

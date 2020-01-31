@@ -54,7 +54,7 @@ public class MultiBookSearchFacade {
             log.info("Exception ::: {}", multiBookSearchHotelResponse.getReturnStatus().getException());
             throw new JacTravelAPIException(INTERNAL_ERROR_TYPE, multiBookSearchHotelResponse.getReturnStatus().getException());
         }
-        return multiBookSearchMapperUtil.mapPreCancelResponse.apply(multiBookSearchHotelResponse);
+        return multiBookSearchMapperUtil.mapMultiBookSearchResponse.apply(multiBookSearchHotelResponse);
     }
 
     public MultiBookSearchResponse handleMultiBookSearch(MultiBookSearchRequest multiBookSearchRequest) {
