@@ -8,7 +8,7 @@ username : Travelbeta
 password : xmltest
 
 #time before redis cache expires
-cacheExpiryHours : 10
+cacheExpiryHours : 1
 
 #Rest Endpoint
 baseUrl : http://xmlintegrations.jactravel.com/xml/book.aspx

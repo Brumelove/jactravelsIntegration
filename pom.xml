@@ -42,6 +42,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
+
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
@@ -136,6 +137,12 @@
             <version>${junit-jupiter.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -149,7 +156,11 @@
                             <goal>repackage</goal>
                         </goals>
                         <configuration>
-                            <mainClass>com.travelbeta.jactravel.service.SearchApiApplication</mainClass>
+<<<<<<< HEAD
+                            <mainClass>com.travelbeta.jactravels.service.SearchApiApplication</mainClass>
+=======
+                            <mainClass>com.travelbeta.jacktravels.service.SearchApiApplication</mainClass>
+>>>>>>> master
                             <outputDirectory>${project.basedir}/docker</outputDirectory>
                         </configuration>
                     </execution>
