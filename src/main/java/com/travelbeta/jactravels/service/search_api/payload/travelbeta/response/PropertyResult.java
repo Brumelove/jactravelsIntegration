@@ -1,5 +1,7 @@
 package com.travelbeta.jactravels.service.search_api.payload.travelbeta.response;
 
+import com.travelbeta.jactravels.service.property_details_api.payload.client.PropertyDetailsResponse;
+import com.travelbeta.jactravels.service.property_details_api.payload.jactravel.response.Facility;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -45,4 +47,12 @@ public class PropertyResult {
     @XmlElement(name = "RoomType")
     @XmlElementWrapper(name = "RoomTypes")
     private List<RoomType> roomTypes;
+
+    private PropertyDetailsResponse propertyDetails;
+    private List<Facility> hotelFacility;
+    private Double minAmt;
+    private AmountDisplayPojo minAmount;
+    private RoomType selectedRoom;
+    private String searchResultReference;
+    private String searchQuery;
 }

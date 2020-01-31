@@ -1,7 +1,6 @@
 package com.travelbeta.jactravels.service.book_search_api.payload.client;
 
 
-import com.travelbeta.jactravel.service.book_search_api.payload.jactravel.response.*;
 import com.travelbeta.jactravels.service.book_search_api.payload.jactravel.response.*;
 import com.travelbeta.jactravels.service.search_api.payload.travelbeta.response.ReturnStatus;
 import lombok.Data;

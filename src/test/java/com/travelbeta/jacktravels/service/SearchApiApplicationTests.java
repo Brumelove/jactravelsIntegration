@@ -1,4 +1,4 @@
-package com.travelbeta.jactravels.service;
+package com.travelbeta.jacktravels.service;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

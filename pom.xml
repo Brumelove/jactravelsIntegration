@@ -156,11 +156,11 @@
                             <goal>repackage</goal>
                         </goals>
                         <configuration>
-<<<<<<< HEAD
+
                             <mainClass>com.travelbeta.jactravels.service.SearchApiApplication</mainClass>
-=======
+
                             <mainClass>com.travelbeta.jacktravels.service.SearchApiApplication</mainClass>
->>>>>>> master
+
                             <outputDirectory>${project.basedir}/docker</outputDirectory>
                         </configuration>
                     </execution>
