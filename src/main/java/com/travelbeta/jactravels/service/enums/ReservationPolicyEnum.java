@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 @AllArgsConstructor
 public enum ReservationPolicyEnum {
 
-    PLI_POICY("PLI_POLICY"),
+    PLI_POLICY("PLI_POLICY"),
 
     FREE_CANCELLATION("FREE_CANCELLATION"),
 

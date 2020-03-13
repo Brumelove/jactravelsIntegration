@@ -47,12 +47,12 @@ public class PropertyResult {
     @XmlElement(name = "RoomType")
     @XmlElementWrapper(name = "RoomTypes")
     private List<RoomType> roomTypes;
-
-    private PropertyDetailsResponse propertyDetails;
-    private List<Facility> hotelFacility;
-    private Double minAmt;
-    private AmountDisplayPojo minAmount;
-    private RoomType selectedRoom;
-    private String searchResultReference;
-    private String searchQuery;
+//
+//    private PropertyDetailsResponse propertyDetails;
+//    private List<Facility> hotelFacility;
+//    private Double minAmt;
+//    private AmountDisplayPojo minAmount;
+//    private RoomType selectedRoom;
+//    private String searchResultReference;
+//    private String searchQuery;
 }

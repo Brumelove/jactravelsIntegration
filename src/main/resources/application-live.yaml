@@ -14,9 +14,9 @@ spring:
   application:
     name: search-api
   datasource:
-    url: jdbc:postgresql://localhost:5432/travelbetahotel?useUnicode=true&characterEncoding=UTF8&useSSL=false
-    username: travelbetahotel
-    password: travelbetahotel
+    url: jdbc:postgresql://139.162.160.236:5432/jacktravels?useUnicode=true&characterEncoding=UTF8&useSSL=false
+    username: db_user
+    password: '&dD4U32r_1@.>'
     #driverClassName: org.
 
   jpa:
@@ -32,5 +32,5 @@ spring:
   cache:
     type: redis
   redis:
-    host: localhost
+    host: 172.105.73.58
     port: 6379

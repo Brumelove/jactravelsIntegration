@@ -1,13 +1,17 @@
 package com.travelbeta.jactravels.service.search_api.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import javax.persistence.*;
 
-@Data
+@Data @EqualsAndHashCode(callSuper = false)
 @Entity
 @Table(name = "Hotel")
+@AllArgsConstructor @NoArgsConstructor
 public class HotelEntity extends AbstractPersistable<Long> {
 
     private String name;

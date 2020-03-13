@@ -10,7 +10,6 @@ import lombok.val;
 public class EncodeUtil<I,O> {
 
     public String convertObjectToEncodedString(I input){
-        String encodeString = "";
         String xmlString = "";
         val xmlMapper = new XmlMapper();
         try {

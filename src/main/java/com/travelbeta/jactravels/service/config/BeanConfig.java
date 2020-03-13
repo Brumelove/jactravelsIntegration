@@ -2,6 +2,8 @@ package com.travelbeta.jactravels.service.config;
 
 import com.travelbeta.jactravels.service.bean.RestTemplateBean;
 import com.travelbeta.jactravels.service.search_api.util.EncodeUtil;
+import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +11,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
+import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
@@ -37,8 +41,9 @@ import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_PROT
 import static org.springframework.context.annotation.ScopedProxyMode.TARGET_CLASS;
 
 @Configuration
+@Slf4j
+@Data
 public class BeanConfig {
-
     private final TravelBetaConfig travelBetaConfig;
 
     @Autowired
@@ -50,75 +55,82 @@ public class BeanConfig {
     @Scope(value = SCOPE_PROTOTYPE, proxyMode = TARGET_CLASS)
     public RestTemplateBean restTemplateBean() {
 
-        val clientHttpRequestFactory = new HttpComponentsClientHttpRequestFactory(HttpClientBuilder.create().build());
-        clientHttpRequestFactory.setConnectTimeout(2000);
-        clientHttpRequestFactory.setReadTimeout(10000);
+        val clientHttpRequestFactory = new HttpComponentsClientHttpRequestFactory ( HttpClientBuilder.create ().build () );
+        clientHttpRequestFactory.setConnectTimeout ( 2000 );
+        clientHttpRequestFactory.setReadTimeout ( 10000 );
 
-        val restTemplate = new RestTemplate(clientHttpRequestFactory);
-        val converter = new MappingJackson2HttpMessageConverter();
-        converter.setSupportedMediaTypes(Arrays.asList(MediaType.ALL));
+        val restTemplate = new RestTemplate ( clientHttpRequestFactory );
+        val converter = new MappingJackson2HttpMessageConverter ();
+        converter.setSupportedMediaTypes ( Arrays.asList ( MediaType.ALL ) );
 
-        val mappingJackson2XmlHttpMessageConverter = new MappingJackson2XmlHttpMessageConverter();
-        mappingJackson2XmlHttpMessageConverter.setSupportedMediaTypes(Arrays.asList(MediaType.ALL));
+        val mappingJackson2XmlHttpMessageConverter = new MappingJackson2XmlHttpMessageConverter ();
+        mappingJackson2XmlHttpMessageConverter.setSupportedMediaTypes ( Arrays.asList ( MediaType.ALL ) );
 
-        restTemplate.getMessageConverters().add(mappingJackson2XmlHttpMessageConverter);
-        restTemplate.getMessageConverters().add(converter);
-        restTemplate.getMessageConverters().addAll(getMessageConverters());
-        restTemplate.getInterceptors().add(new GzipAcceptHeaderRequestInterceptor());
+        restTemplate.getMessageConverters ().add ( mappingJackson2XmlHttpMessageConverter );
+        restTemplate.getMessageConverters ().add ( converter );
+        restTemplate.getMessageConverters ().addAll ( getMessageConverters () );
+        restTemplate.getInterceptors ().add ( new GzipAcceptHeaderRequestInterceptor () );
         //restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
 
-        val restTemplateBean = new RestTemplateBean();
-        restTemplateBean.setRestTemplate(restTemplate);
-        restTemplateBean.setBaseURL(travelBetaConfig.getBaseUrl());
-        restTemplateBean.setHostURL(travelBetaConfig.getHostUrl());
+        val restTemplateBean = new RestTemplateBean ();
+        restTemplateBean.setRestTemplate ( restTemplate );
+        restTemplateBean.setBaseURL ( travelBetaConfig.getBaseUrl () );
+        restTemplateBean.setHostURL ( travelBetaConfig.getHostUrl () );
 
 
         return restTemplateBean;
     }
-    private List<HttpMessageConverter<?>> getMessageConverters() {
-        val marshaller = new XStreamMarshaller();
-        val marshallingConverter =  new MarshallingHttpMessageConverter(marshaller);
 
-       val converters = new ArrayList<HttpMessageConverter<?>>();
-        converters.add(marshallingConverter);
+    private List<HttpMessageConverter<?>> getMessageConverters() {
+        val marshaller = new XStreamMarshaller ();
+        val marshallingConverter = new MarshallingHttpMessageConverter ( marshaller );
+
+        val converters = new ArrayList<HttpMessageConverter<?>> ();
+        converters.add ( marshallingConverter );
         return converters;
     }
 
     public static class GzipAcceptHeaderRequestInterceptor implements ClientHttpRequestInterceptor {
         @Override
         public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution) throws IOException {
-            request.getHeaders().set(HttpHeaders.ACCEPT_ENCODING, "gzip");
-            return execution.execute(request, body);
+            request.getHeaders ().set ( HttpHeaders.ACCEPT_ENCODING, "gzip" );
+            return execution.execute ( request, body );
         }
     }
 
     @Bean
     @Scope(value = SCOPE_PROTOTYPE, proxyMode = TARGET_CLASS)
-    public EncodeUtil encodeUtil(){
-        return new EncodeUtil();
+    public EncodeUtil encodeUtil() {
+        return new EncodeUtil ();
     }
 
     @Bean
-    public RedisConnectionFactory redisConnectionFactory() {
-        final JedisPoolConfig poolConfig = new JedisPoolConfig();
-        poolConfig.setMaxTotal(5);
-        poolConfig.setTestOnBorrow(true);
-        poolConfig.setTestOnReturn(true);
+    public JedisConnectionFactory redisConnectionFactory() {
 
-        final JedisConnectionFactory connectionFactory = new JedisConnectionFactory(poolConfig);
-        connectionFactory.setUsePool(true);
-        connectionFactory.setHostName("localhost");
-        connectionFactory.setPort(6379);
-        return connectionFactory;
+        final JedisPoolConfig poolConfig = new JedisPoolConfig ();
+        poolConfig.setMaxTotal ( 5 );
+        poolConfig.setMaxIdle ( 30 );
+        poolConfig.setMinIdle ( 10 );
+        poolConfig.setTestOnBorrow ( true );
+        poolConfig.setTestOnReturn ( true );
+
+
+        RedisStandaloneConfiguration connectionFactory = new RedisStandaloneConfiguration ();
+        connectionFactory.setHostName ( "172.105.73.58" );
+        connectionFactory.setPort ( 6379 );
+
+
+        return new JedisConnectionFactory ( connectionFactory );
+
     }
 
     @Bean
     public RedisTemplate<?, ?> redisTemplate() {
-        final RedisTemplate<?, ?> redisTemplate = new RedisTemplate<>();
-        redisTemplate.setConnectionFactory(redisConnectionFactory());
-        redisTemplate.setEnableTransactionSupport(true);
-        redisTemplate.setKeySerializer(new StringRedisSerializer());
-        redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
+        final RedisTemplate<?, ?> redisTemplate = new RedisTemplate<> ();
+        redisTemplate.setConnectionFactory ( redisConnectionFactory () );
+        redisTemplate.setEnableTransactionSupport ( true );
+        redisTemplate.setKeySerializer ( new StringRedisSerializer () );
+        redisTemplate.setValueSerializer ( new GenericJackson2JsonRedisSerializer () );
         return redisTemplate;
     }
 
