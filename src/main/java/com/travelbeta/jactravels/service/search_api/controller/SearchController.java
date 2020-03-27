@@ -10,13 +10,11 @@ import com.travelbeta.jactravels.service.search_api.payload.client.SearchRequest
 import com.travelbeta.jactravels.service.search_api.payload.client.SearchResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+@CrossOrigin(maxAge = 3600)
 @Slf4j
 @RestController
 public class SearchController {
@@ -27,6 +25,7 @@ public class SearchController {
     public SearchController(SearchFacade searchFacade) {
         this.searchFacade = searchFacade;
     }
+
 
     @PostMapping( "/v1/search")
     @ApiOperation(value = "", notes = "Search API")
